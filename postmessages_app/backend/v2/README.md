@@ -50,3 +50,9 @@ use postmessages;
 show collections;
 db.messages.find({});
 ```
+
+to delete all the messages:
+
+```
+db.messages.deleteMany( {} )
+```

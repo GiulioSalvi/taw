@@ -48,7 +48,6 @@ colors.enabled = true;
 
 
 import mongoose = require('mongoose');
-import {Message} from './Message';
 import * as message from './Message';
 
 
@@ -175,7 +174,7 @@ let server = http.createServer( function( req, res ) {
 The bootstrap code will do the following:
 
 1) Connect to the database
-2) Check how many messages we have in the "Message" collection
+2) Check how many messages we have in the 'Message' (messages) collection
 3) No messages? Create some test messages to populate the collection. Otherwise skip to 4
 4) Start the webserver
 
@@ -232,7 +231,6 @@ The bootstrap code will do the following:
 
  */ 
 
-/**/ 
 
 console.log("Starting the application");
 mongoose.connect( 'mongodb://mymongo:27017/postmessages' )
@@ -266,7 +264,6 @@ mongoose.connect( 'mongodb://mymongo:27017/postmessages' )
 
             return Promise.all([m1, m2, m3]);
         }
-        //return Promise.reject("Database is not empty!")
     }
 ).then( 
     () => {
@@ -361,7 +358,7 @@ NOTE2: try..catch works well with synchronous code. With asynchronous code
 
     to attach an error handler to the promise itself, without (a)waiting it
     to be settled.
-/*  
+/*   
 
 async function main()
 {
@@ -373,29 +370,34 @@ async function main()
 
         console.log("Collection contains " + count + " messages");
 
-        let m1 = await message.getModel().create({
-            tags: ["Tag1", "Tag2", "Tag3"],
-            content: "Post 1",
-            timestamp: new Date()
-        });
+        if( count == 0 ) {
 
-        let m2 = await message.getModel().create({
-            tags: ["Tag1", "Tag5"],
-            content: "Post 2",
-            timestamp: new Date()
-        });
+            let m1 = await message.getModel().create({
+                tags: ["Tag1", "Tag2", "Tag3"],
+                content: "Post 1",
+                timestamp: new Date()
+            });
 
-        let m3 = await message.getModel().create({
-            tags: ["Tag6", "Tag10"],
-            content: "Post 3",
-            timestamp: new Date()
-        });
+            let m2 = await message.getModel().create({
+                tags: ["Tag1", "Tag5"],
+                content: "Post 2",
+                timestamp: new Date()
+            });
 
-        await new Promise( (resolve)=>{ 
-            server.listen( 8080, function() {
-                resolve(0);
+            let m3 = await message.getModel().create({
+                tags: ["Tag6", "Tag10"],
+                content: "Post 3",
+                timestamp: new Date()
+            });
+
+            console.log("3 test messages created!");
+
+            await new Promise( (resolve)=>{ 
+                server.listen( 8080, function() {
+                    resolve(0);
+                })
             })
-        })
+        }
 
         console.log("HTTP Server started on port 8080");
 
@@ -406,6 +408,6 @@ async function main()
 } 
 
 
-main()
+main().catch( (err) => {console.log(err);} )
 
 /**/ 

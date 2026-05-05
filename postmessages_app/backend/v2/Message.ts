@@ -43,12 +43,28 @@ const messageSchema = new mongoose.Schema( {
         type: mongoose.SchemaTypes.Date,
         required: true
     }
+    // Note: by default, Mongose adds an _id (type: ObjectId) property to each schema
 })
-export function getSchema() { return messageSchema; }
 
-// Mongoose Model
-const messageModel = mongoose.model('Message', getSchema() )
 
-export function getModel()  { // Return Model as singleton
+
+// Mongoose Models are responsible for creating and reading 
+// documents from the underlying MongoDB database.
+//
+// A model is "compiled" from a schema definition. The
+// first parameter is the "singular name" of the collection
+// to use. Mongoose will use the plural, lowercase
+// version of the model name.
+// 
+// In our case, the database will contain a collection
+// named 'messages' (which is the plural lowercase of 'Message')
+
+// An instance of a model is called a document, and can be 
+// directly saved to the database (see postmessages.ts)
+
+const messageModel = mongoose.model('Message', messageSchema )
+
+
+export function getModel()  { // export messageModel as a singleton
     return messageModel;
 }
