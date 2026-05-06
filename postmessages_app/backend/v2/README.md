@@ -9,16 +9,13 @@ How to run it via Docker:
 docker network create taw
 ```
 
-
-2. Start a MongoDB container 
+2. Start a MongoDB container
 
 ```
 docker run --network taw --name mymongo -d mongo:6
 ```
 
-
 3. Open VSC and reopen this directory in container
-
 
 4. Open the terminal and run
 
@@ -33,14 +30,13 @@ npx tsc
 node postmessages
 ```
 
-
 Optional:
 ---
 
 To inspect the database with mongo shell:
 
 ```
-docker run -it --name mongodbshell --network taw --rm mongo:6 mongosh --host mymongo
+docker run -it --name mongoshell --network taw --rm mongo:6 mongosh --host mymongo
 ```
 
 Then, inside the shell:
@@ -49,10 +45,4 @@ Then, inside the shell:
 use postmessages;
 show collections;
 db.messages.find({});
-```
-
-to delete all the messages:
-
-```
-db.messages.deleteMany( {} )
 ```
