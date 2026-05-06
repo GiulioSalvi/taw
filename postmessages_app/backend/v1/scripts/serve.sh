@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+set -eu
 
 npm run build
 npm start
