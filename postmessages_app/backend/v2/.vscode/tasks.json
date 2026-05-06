@@ -1,0 +1,41 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start Server",
+
+            "type": "shell",
+            "command": "sh scripts/start-server.sh",
+
+            "isBackground": true,
+            "problemMatcher": [],
+
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "label": "Start TypeScript RT Compilation",
+
+            "type": "shell",
+            "command": "sh scripts/start-tsrc.sh",
+
+            "isBackground": true,
+            "problemMatcher": "$tsc-watch",
+
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            },
+
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        }
+    ]
+}
